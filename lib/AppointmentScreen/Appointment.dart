@@ -48,7 +48,7 @@ class Appointment extends StatelessWidget {
                   hospital: "City A Hospital",
                   category: "Completed",
                   notes: "I had a stomacache",
-                  time: "09.00 AM",
+                  time: TimeOfDay(hour: 09, minute: 10),
                 ),
               ),
               AppointmentContainer(
@@ -59,7 +59,7 @@ class Appointment extends StatelessWidget {
                   hospital: "City A Hospital",
                   category: "Arrived",
                   notes: "I had a fever",
-                  time: "15.00 PM",
+                  time: TimeOfDay(hour: 09, minute: 30),
                 ),
               ),
             ],

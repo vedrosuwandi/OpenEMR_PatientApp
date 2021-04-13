@@ -17,6 +17,8 @@ class AppointmentDetails extends StatefulWidget {
 }
 
 class _AppointmentDetailsState extends State<AppointmentDetails> {
+  TimeOfDay selected;
+
   @override
   Widget build(BuildContext context) {
     TextStyle contextsize = TextStyle(fontSize: 18);
@@ -88,11 +90,13 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                         ),
                         FlatButton(
                           color: Colors.grey[100],
-                          onPressed: () {},
+                          onPressed: () {
+                            selectedTime(context);
+                          },
                           child: Row(
                             children: [
                               Text(
-                                "${widget.details.time}",
+                                widget.details.time.format(context),
                                 style: TextStyle(fontSize: 15),
                               ),
                               Icon(Icons.arrow_drop_down),
@@ -316,27 +320,26 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       ),
     );
   }
-  /*
+
   Future<Null> selectedTime(BuildContext context) async {
     selected = await showTimePicker(
       context: context,
-      initialTime: ,
+      initialTime: widget.details.time,
     );
 
-    if (selected != null && selected != time) {
+    if (selected != null && selected != widget.details.time) {
       setState(() {
-        time = selected;
+        widget.details.time = selected;
       });
     }
   }
-*/
 
   selectDate(BuildContext context) async {
     //selected date
     final DateTime selected = await showDatePicker(
       context: context,
       initialDate: widget.details.date, // the initial date
-      firstDate: DateTime(1900), // the initial date  in the calendar
+      firstDate: DateTime(2021), // the initial date  in the calendar
       lastDate: DateTime(2100), // the final date in the calendar
     );
     if (selected != null && selected != widget.details.date)

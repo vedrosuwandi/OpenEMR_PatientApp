@@ -7,7 +7,7 @@ class AppointmentData {
   String hospital;
   String notes;
   String category;
-  String time;
+  TimeOfDay time;
 
   AppointmentData({
     Key key,
@@ -20,7 +20,7 @@ class AppointmentData {
     this.hospital,
   });
 
-  Map<String, dynamic> get map {
+  get map {
     return {
       "doctor": doctor,
       "status": status,
