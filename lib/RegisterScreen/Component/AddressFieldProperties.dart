@@ -1,31 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:patient_app/RegisterScreen/Component/AddressFieldContainer.dart';
 
-class AddressFieldProperties extends StatelessWidget {
+class AddressFieldProperties extends StatefulWidget {
   final String label;
   final ValueChanged<String> onChanges;
+  final TextEditingController controller;
 
   const AddressFieldProperties({
     Key key,
     this.label,
     this.onChanges,
+    this.controller,
   }) : super(key: key);
 
+  @override
+  _AddressFieldPropertiesState createState() => _AddressFieldPropertiesState();
+}
+
+class _AddressFieldPropertiesState extends State<AddressFieldProperties> {
   @override
   Widget build(BuildContext context) {
     Color primarycolor = Colors.blue[700];
     return AddressFieldContainer(
       child: TextField(
+        controller: widget.controller,
         maxLength: 100,
         decoration: InputDecoration(
-          hintText: label,
+          hintText: widget.label,
           icon: Icon(
             Icons.house,
             color: primarycolor,
           ),
           border: InputBorder.none,
         ),
-        onChanged: onChanges,
+        onChanged: widget.onChanges,
       ),
     );
   }

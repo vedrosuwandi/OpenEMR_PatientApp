@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:patient_app/Data/UserData.dart';
 import 'package:patient_app/HomeScreen/Component/GridViewScene.dart';
 import 'package:patient_app/HomeScreen/Component/Profile.dart';
 import 'package:patient_app/LoginScreen/Login.dart';
 
 class Dashboard extends StatefulWidget {
+  UserData user;
+
+  Dashboard({
+    this.user,
+  });
+
   @override
   _DashboardState createState() => _DashboardState();
 }
@@ -51,7 +58,7 @@ class _DashboardState extends State<Dashboard> {
           Padding(
             padding: EdgeInsets.only(left: 20, right: 20),
             child: Profile(
-              name: "Vedro Suwandi",
+              name: widget.user.firstname + " " + widget.user.lastname,
             ),
           ),
           SizedBox(

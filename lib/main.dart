@@ -1,7 +1,10 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:patient_app/Cert/MyHttpOverrides.dart';
 import 'package:patient_app/Welcome.dart';
 
 void main() {
+  HttpOverrides.global = new MyHttpOverrides();
   runApp(Patient_App());
 }
 

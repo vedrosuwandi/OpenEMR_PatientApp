@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:patient_app/Data/UserData.dart';
 import 'package:patient_app/HomeScreen/Component/MenuContainer.dart';
 import 'package:patient_app/AppointmentScreen/Appointment.dart';
-import 'package:intl/intl.dart';
 import 'package:patient_app/UserProfileScreen/UserProfile.dart';
 
 class GridViewScene extends StatelessWidget {
-  const GridViewScene({
+  GridViewScene({
     Key key,
   }) : super(key: key);
 
@@ -42,8 +41,8 @@ class GridViewScene extends StatelessWidget {
                 MaterialPageRoute(builder: (context) {
                   return UserProfile(
                     user: UserData(
-                      firstname: "Vedro",
-                      lastname: "Suwandi",
+                      firstname: "Hello",
+                      lastname: "World",
                       age: 20,
                       dob: DateTime(2000, 10, 07),
                       address: "Jakarta",
@@ -51,7 +50,7 @@ class GridViewScene extends StatelessWidget {
                       city: "Jakarta",
                       country: "Indonesia",
                       phone: "+62 - 123456678",
-                      email: "vedrosuwandi@gmail.com",
+                      email: "helloworld@gmail.com",
                     ),
                   );
                 }),
@@ -68,3 +67,16 @@ class GridViewScene extends StatelessWidget {
     );
   }
 }
+/*
+UserData(
+                      firstname: user.getFirstname,
+                      lastname: user.getLastname,
+                      address: user.getAddress,
+                      email: user.getEmail,
+                      city: user.getCity,
+                      phone: user.getPhone,
+                      country: user.getCountry,
+                      zipcode: user.getZipcode,
+                    ),
+
+                    */

@@ -10,22 +10,25 @@ class Background extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return Container(
       height: double.infinity,
       width: size.width,
       alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            "Registration Form",
-            style: TextStyle(color: Colors.cyan, fontSize: 35),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          SingleChildScrollView(child: child),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Registration Form",
+              style: TextStyle(color: Colors.cyan, fontSize: 35),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            SingleChildScrollView(child: child),
+          ],
+        ),
       ),
     );
   }

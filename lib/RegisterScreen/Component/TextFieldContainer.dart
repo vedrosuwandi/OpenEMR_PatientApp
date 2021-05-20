@@ -12,7 +12,7 @@ class TextFieldContainer extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width * 0.95,
-      height: size.height * 0.05,
+      //height: size.height * 0.05,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -21,7 +21,7 @@ class TextFieldContainer extends StatelessWidget {
             color: Colors.white.withOpacity(0.5),
             blurRadius: 7,
             spreadRadius: 5,
-            offset: Offset(0, 2), // changes position of shadow
+            offset: Offset(0, 5), // changes position of shadow
           ),
         ],
       ),

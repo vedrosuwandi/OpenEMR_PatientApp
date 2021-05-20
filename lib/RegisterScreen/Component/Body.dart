@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:patient_app/LoginScreen/Login.dart';
 import 'package:patient_app/RegisterScreen/Component/AddressFieldProperties.dart';
 import 'package:patient_app/RegisterScreen/Component/Background.dart';
@@ -11,7 +12,71 @@ import "package:patient_app/RegisterScreen/Component/RoundButton.dart";
 import 'GenderDropdown.dart';
 import 'package:patient_app/LoginScreen/Component/AccountStatus.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  final formkey = GlobalKey<FormState>();
+  TextEditingController firstController = new TextEditingController();
+  TextEditingController lastController = new TextEditingController();
+  TextEditingController userController = new TextEditingController();
+  TextEditingController passController = new TextEditingController();
+  TextEditingController confirmpassController = new TextEditingController();
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController addressController = new TextEditingController();
+  TextEditingController countryController = new TextEditingController();
+  TextEditingController phoneController = new TextEditingController();
+  TextEditingController cityController = new TextEditingController();
+  TextEditingController zipController = new TextEditingController();
+  String mes = ' ';
+
+  // this function triggers when the password confirmation isn't correct
+  void notMatch() {
+    Size size = MediaQuery.of(context).size;
+    AlertDialog alert = AlertDialog(
+      content: Padding(
+        padding: EdgeInsets.only(left: size.width * 0.05),
+        child: Text(
+          "Password does not match",
+          style: TextStyle(color: Colors.red),
+        ),
+      ),
+      actions: <Widget>[
+        RaisedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          color: Colors.grey,
+          child: Text("OK"),
+        ),
+      ],
+    );
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
+        });
+  }
+
+  // register function
+  void register() async {
+    var url = 'https://10.0.2.2/conn/register.php';
+    final response = http.post(Uri.parse(url), body: {
+      "username": userController.text,
+      "password": passController.text,
+      "fname": firstController.text,
+      "lname": lastController.text,
+      "email": emailController.text,
+      "street": addressController.text,
+      "state": countryController.text,
+      "city": cityController.text,
+      "zip": zipController.text,
+      "phone": phoneController.text,
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -21,10 +86,11 @@ class Body extends StatelessWidget {
       width: 10,
     );
     SizedBox heightspace = SizedBox(
-      height: 10,
+      height: 20,
     );
     return Background(
-      child: SingleChildScrollView(
+      child: Form(
+        key: formkey,
         child: Column(
           children: [
             Row(
@@ -36,6 +102,14 @@ class Body extends StatelessWidget {
                     label: "First Name",
                     icon: Icons.person_outline,
                     onChanges: (value) {},
+                    controller: firstController,
+                    validate: (value) {
+                      if (value.isEmpty) {
+                        return "Please Enter Your Name";
+                      } else {
+                        return null;
+                      }
+                    },
                   ),
                 ),
                 widespace,
@@ -44,6 +118,7 @@ class Body extends StatelessWidget {
                     label: "Last Name",
                     icon: Icons.person_outline,
                     onChanges: (value) {},
+                    controller: lastController,
                   ),
                 ),
                 widespace,
@@ -75,6 +150,14 @@ class Body extends StatelessWidget {
               label: "Username",
               icon: Icons.person,
               onChanges: (value) {},
+              controller: userController,
+              validate: (value) {
+                if (value.isEmpty) {
+                  return "Please Enter Your Username";
+                } else {
+                  return null;
+                }
+              },
             ),
             heightspace,
             // Password Field
@@ -82,14 +165,14 @@ class Body extends StatelessWidget {
               label: "Password",
               icon: Icons.lock,
               onChanges: (value) {},
-              visiblity: Icons.visibility,
+              controller: passController,
             ),
             heightspace,
             PasswordTextProperties(
               label: "Confirm Password",
               icon: Icons.lock,
               onChanges: (value) {},
-              visiblity: Icons.visibility,
+              controller: confirmpassController,
             ),
             heightspace,
             //Email Field
@@ -97,12 +180,21 @@ class Body extends StatelessWidget {
               label: "e-mail",
               icon: Icons.mail,
               onChanges: (value) {},
+              controller: emailController,
+              validate: (value) {
+                if (value.isEmpty) {
+                  return "Please Enter Your email";
+                } else {
+                  return null;
+                }
+              },
             ),
             heightspace,
             //Adress Field
             AddressFieldProperties(
               label: "Address",
               onChanges: (value) {},
+              controller: addressController,
             ),
             heightspace,
             Row(
@@ -117,6 +209,14 @@ class Body extends StatelessWidget {
                     label: "Country",
                     icon: Icons.flag,
                     onChanges: (value) {},
+                    controller: countryController,
+                    validate: (value) {
+                      if (value.isEmpty) {
+                        return "* Required";
+                      } else {
+                        return null;
+                      }
+                    },
                   ),
                 ),
                 widespace,
@@ -126,6 +226,14 @@ class Body extends StatelessWidget {
                     icon: Icons.phone,
                     label: "Phone Number",
                     onChanges: (value) {},
+                    controller: phoneController,
+                    validate: (value) {
+                      if (value.isEmpty) {
+                        return "Please Enter Your Phone Number";
+                      } else {
+                        return null;
+                      }
+                    },
                   ),
                 ),
                 widespace,
@@ -141,6 +249,14 @@ class Body extends StatelessWidget {
                     label: "City",
                     icon: Icons.location_city,
                     onChanges: (value) {},
+                    controller: cityController,
+                    validate: (value) {
+                      if (value.isEmpty) {
+                        return "Please Enter Your City";
+                      } else {
+                        return null;
+                      }
+                    },
                   ),
                 ),
                 widespace,
@@ -149,6 +265,14 @@ class Body extends StatelessWidget {
                     label: "Zip Code",
                     icon: Icons.markunread_mailbox,
                     onChanges: (value) {},
+                    controller: zipController,
+                    validate: (value) {
+                      if (value.isEmpty) {
+                        return "* Required";
+                      } else {
+                        return null;
+                      }
+                    },
                   ),
                 ),
                 widespace,
@@ -157,7 +281,18 @@ class Body extends StatelessWidget {
             RoundButton(
               label: "Register",
               color: Colors.cyan,
-              onpress: () {},
+              onpress: () {
+                if (formkey.currentState.validate()) {
+                  if (passController.text != confirmpassController.text) {
+                    notMatch();
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return Login();
+                    }));
+                  }
+                }
+              },
             ),
             AccountStatus(
               login: false,
