@@ -40,7 +40,7 @@ class _BodyState extends State<Body> {
         padding: EdgeInsets.only(left: size.width * 0.05),
         child: Text(
           "Password does not match",
-          style: TextStyle(color: Colors.red),
+          style: TextStyle(color: Colors.red, fontSize: 15),
         ),
       ),
       actions: <Widget>[
@@ -50,6 +50,39 @@ class _BodyState extends State<Body> {
           },
           color: Colors.grey,
           child: Text("OK"),
+        ),
+      ],
+    );
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
+        });
+  }
+
+  //triggered when the registration is success
+  void success() {
+    Size size = MediaQuery.of(context).size;
+    AlertDialog alert = AlertDialog(
+      content: Padding(
+        padding: EdgeInsets.only(left: size.width * 0.05),
+        child: Text(
+          "You Have Successfully Registered an Account",
+          style: TextStyle(
+            color: Colors.blue[700],
+            fontSize: 15,
+          ),
+        ),
+      ),
+      actions: <Widget>[
+        RaisedButton(
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return Login();
+            }));
+          },
+          color: Colors.grey,
+          child: Text("Login Now"),
         ),
       ],
     );
@@ -105,7 +138,7 @@ class _BodyState extends State<Body> {
                     controller: firstController,
                     validate: (value) {
                       if (value.isEmpty) {
-                        return "Please Enter Your Name";
+                        return "* Required";
                       } else {
                         return null;
                       }
@@ -119,6 +152,13 @@ class _BodyState extends State<Body> {
                     icon: Icons.person_outline,
                     onChanges: (value) {},
                     controller: lastController,
+                    validate: (value) {
+                      if (value.isEmpty) {
+                        return "* Required";
+                      } else {
+                        return null;
+                      }
+                    },
                   ),
                 ),
                 widespace,
@@ -153,7 +193,7 @@ class _BodyState extends State<Body> {
               controller: userController,
               validate: (value) {
                 if (value.isEmpty) {
-                  return "Please Enter Your Username";
+                  return "* Required";
                 } else {
                   return null;
                 }
@@ -162,18 +202,30 @@ class _BodyState extends State<Body> {
             heightspace,
             // Password Field
             PasswordTextProperties(
-              label: "Password",
-              icon: Icons.lock,
-              onChanges: (value) {},
-              controller: passController,
-            ),
+                label: "Password",
+                icon: Icons.lock,
+                onChanges: (value) {},
+                controller: passController,
+                validate: (value) {
+                  if (value.isEmpty) {
+                    return "* Required";
+                  } else {
+                    return null;
+                  }
+                }),
             heightspace,
             PasswordTextProperties(
-              label: "Confirm Password",
-              icon: Icons.lock,
-              onChanges: (value) {},
-              controller: confirmpassController,
-            ),
+                label: "Confirm Password",
+                icon: Icons.lock,
+                onChanges: (value) {},
+                controller: confirmpassController,
+                validate: (value) {
+                  if (value.isEmpty) {
+                    return "* Required";
+                  } else {
+                    return null;
+                  }
+                }),
             heightspace,
             //Email Field
             TextFieldProperties(
@@ -182,8 +234,12 @@ class _BodyState extends State<Body> {
               onChanges: (value) {},
               controller: emailController,
               validate: (value) {
+                RegExp emailvalidate =
+                    RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
                 if (value.isEmpty) {
-                  return "Please Enter Your email";
+                  return "* Required";
+                } else if (emailvalidate.hasMatch(value) == false) {
+                  return "Please Enter a valid email address";
                 } else {
                   return null;
                 }
@@ -228,8 +284,11 @@ class _BodyState extends State<Body> {
                     onChanges: (value) {},
                     controller: phoneController,
                     validate: (value) {
+                      RegExp phonevalidate = RegExp(r"^\+?0[0-9]{10}$");
                       if (value.isEmpty) {
                         return "Please Enter Your Phone Number";
+                      } else if (phonevalidate.hasMatch(value) == false) {
+                        return "Please enter a 11 digits number";
                       } else {
                         return null;
                       }
@@ -286,10 +345,8 @@ class _BodyState extends State<Body> {
                   if (passController.text != confirmpassController.text) {
                     notMatch();
                   } else {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return Login();
-                    }));
+                    success();
+                    register();
                   }
                 }
               },

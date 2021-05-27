@@ -46,7 +46,7 @@ class GridViewScene extends StatelessWidget {
                       age: 20,
                       dob: DateTime(2000, 10, 07),
                       address: "Jakarta",
-                      zipcode: 123456,
+                      zipcode: "123456",
                       city: "Jakarta",
                       country: "Indonesia",
                       phone: "+62 - 123456678",

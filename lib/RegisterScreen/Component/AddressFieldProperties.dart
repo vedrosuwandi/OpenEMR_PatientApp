@@ -5,12 +5,14 @@ class AddressFieldProperties extends StatefulWidget {
   final String label;
   final ValueChanged<String> onChanges;
   final TextEditingController controller;
+  final Function validate;
 
   const AddressFieldProperties({
     Key key,
     this.label,
     this.onChanges,
     this.controller,
+    this.validate,
   }) : super(key: key);
 
   @override
@@ -22,7 +24,8 @@ class _AddressFieldPropertiesState extends State<AddressFieldProperties> {
   Widget build(BuildContext context) {
     Color primarycolor = Colors.blue[700];
     return AddressFieldContainer(
-      child: TextField(
+      child: TextFormField(
+        validator: widget.validate,
         controller: widget.controller,
         maxLength: 100,
         decoration: InputDecoration(
